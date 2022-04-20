@@ -258,7 +258,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row">
           
-          <div class="col-lg-9">
+          <div class="col-lg-10">
              <div class="card card-primary card-outline">
               <div class="card-header">
                 <h5 class="m-0">  @yield('titulo-card')</h5>
