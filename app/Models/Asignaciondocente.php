@@ -22,4 +22,9 @@ class Asignaciondocente extends Model
  {
     return $this->belongsTo('App\Models\Curso');
  }
+  //Relacion con la tabla Cursos
+  public function personas()
+  {
+    return $this->belongsTo('App\Models\Persona');
+  }
 }

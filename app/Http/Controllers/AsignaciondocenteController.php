@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asignatura;
+use App\Models\Persona;
+use App\Models\Curso;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Models\Asignaciondocente;
 
@@ -25,7 +29,21 @@ class AsignaciondocenteController extends Controller
      */
     public function create()
     {
-        //
+        //Consulta de Personas
+        $personas=Persona::orderBy('id','DESC')
+        ->select('personas.id','personas.nombre', 'personas.apellido','personas.documento_identidad')
+        ->get();
+
+        //Consulta de Asignaturas
+        $asignaturas=Asignatura::orderBy('id','DESC')
+         ->select('asignaturas.id','asignaturas.codigo_asignatura','asignaturas.nombre_asignatura')
+         ->get();
+
+         //Consulta de Cursos
+        $cursos=Curso::orderBy('id','DESC')
+         ->select('cursos.id', 'cursos.curso', 'cursos.nombre')
+         ->get();
+        return view('asignaciond.create')->with('personas',$personas)->with('asignaturas',$asignaturas)->with('cursos',$cursos);
     }
 
     /**
@@ -36,7 +54,13 @@ class AsignaciondocenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $asignaciond=new Asignaciondocente;
+        $asignaciond->asignaturas_id=$request->get('asignaturas_id');
+        $asignaciond->personas_id=$request->get('personas_id');
+        $asignaciond->cursos_id=$request->get('cursos_id');
+        $asignaciond->ano_lectivo=$request->get('ano_lectivo');
+        $asignaciond->save();
+        return Redirect::to('asignaciond');
     }
 
     /**
@@ -58,7 +82,27 @@ class AsignaciondocenteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $asignaciond=Asignaciondocente::findOrFail($id);
+        //Consulta de Personas
+        $personas=Persona::orderBy('id','DESC')
+        ->select('personas.id','personas.nombre', 'personas.apellido','personas.documento_identidad')
+        ->whereNotIn('personas.id',[$asignaciond->personas_id])
+        ->get();
+
+         //Consulta de Asignaturas
+        $asignaturas=Asignatura::orderBy('id','DESC')
+        ->select('asignaturas.id','asignaturas.codigo_asignatura', 'asignaturas.nombre_asignatura')
+        ->whereNotIn('asignaturas.id',[$asignaciond->asignaturas_id])
+        ->get();
+
+         //Consulta de Cursos
+        $cursos=Curso::orderBy('id','DESC')
+        ->select('cursos.id', 'cursos.curso', 'cursos.nombre')
+        ->whereNotIn('cursos.id',[$asignaciond->cursos_id])
+        ->get();
+
+        return view("asignaciond.edit")->with('asignaciond',$asignaciond)->with('personas',$personas)->with('asignaturas',$asignaturas)->with('cursos',$cursos); 
+
     }
 
     /**
@@ -70,7 +114,13 @@ class AsignaciondocenteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $asignaciond=Asignaciondocente::findOrFail($id);
+        $asignaciond->asignaturas_id=$request->get('asignaturas_id');
+        $asignaciond->personas_id=$request->get('personas_id');
+        $asignaciond->cursos_id=$request->get('cursos_id');
+        $asignaciond->ano_lectivo=$request->get('ano_lectivo'); 
+        $asignaciond->update();
+        return Redirect::to('asignaciond');
     }
 
     /**

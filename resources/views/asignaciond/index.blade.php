@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-9">
-        <a href="{{url('persona/create')}}" class="pull-right">
+        <a href="{{url('asignaciond/create')}}" class="pull-right">
             <button class="btn btn-success">Carga Academica</button> </a>
         <a href="{{url('imprimirPersonas')}}" class="pull-right">
             <button class="btn btn-success">Imprimir Pdf</button> </a>
@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ $asd->id }}</td> 
                         <td>{{ $asd->asignaturas->nombre_asignatura}}</td>
-                        <td>{{ $asd->personas_id}} - {{ $asd->personas_nombre}} - {{ $asd->personas_}} </td>
+                        <td>{{ $asd->personas_id}} - {{ $asd->personas->nombre}} - {{ $asd->personas->apellido}} </td>
                         <td>{{ $asd->cursos->nombre }}</td>
                         <td>{{ $asd->ano_lectivo }}</td>
                         <td>
