@@ -22,3 +22,6 @@ Route::resource('persona', 'App\Http\Controllers\PersonaController');
 Route::get('imprimirPersonas','App\http\Controllers\PdfController@imprimirPersonas')->name('imprimirPersonas');
 
 Route::resource('asignaciond','App\http\Controllers\AsignaciondocenteController');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
